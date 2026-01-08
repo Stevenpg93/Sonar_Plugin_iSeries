@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.example.sonar</groupId>
+  <!-- Sigue el patrón recomendado: "sonar-{key}-plugin" -->
+  <artifactId>sonar-todo-check-plugin</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+  <name>TODO Check Plugin</name>
+  
+  <!-- IMPORTANTE: packaging debe ser "sonar-plugin" para sonar-packaging-maven-plugin -->
+  <packaging>sonar-plugin</packaging>
+
+  <properties>
+    <maven.compiler.release>17</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    
+    <!-- Versión del SonarQube Plugin API compatible con SonarQube 9.9 -->
+    <sonar-plugin-api.version>9.14.0.375</sonar-plugin-api.version>
+  </properties>
+
+  <dependencies>
+    <!-- 
+      SonarQube Plugin API 
+      - Desde v9.5 el groupId cambió de org.sonarsource.sonarqube a org.sonarsource.api.plugin
+      - Scope "provided" porque SonarQube ya lo provee en runtime (no se empaqueta en el JAR)
+      - Compatible con SonarQube 9.9+
+    -->
+    <dependency>
+      <groupId>org.sonarsource.api.plugin</groupId>
+      <artifactId>sonar-plugin-api</artifactId>
+      <version>${sonar-plugin-api.version}</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+  <!-- Repositorios corporativos Bancolombia (Artifactory como proxy de Maven Central) -->
+  <repositories>
+    <repository>
+      <id>bancolombia-maven</id>
+      <name>Bancolombia Maven (Artifactory)</name>
+      <url>https://artifactory.apps.bancolombia.com/maven-bancolombia</url>
+      <releases><enabled>true</enabled></releases>
+      <snapshots><enabled>true</enabled></snapshots>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>bancolombia-maven</id>
+      <name>Bancolombia Maven Plugins (Artifactory)</name>
+      <url>https://artifactory.apps.bancolombia.com/maven-bancolombia</url>
+      <releases><enabled>true</enabled></releases>
+      <snapshots><enabled>true</enabled></snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <build>
+    <plugins>
+      <!-- Compilador Java -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+        <configuration>
+          <release>${maven.compiler.release}</release>
+        </configuration>
+      </plugin>
+
+      <!-- 
+        Plugin oficial de SonarSource para empaquetar plugins
+        - Crea el MANIFEST.MF automáticamente con los metadatos correctos
+        - Valida la estructura del plugin
+        - Genera el JAR con formato correcto para SonarQube
+        - Reemplaza maven-jar-plugin
+      -->
+      <plugin>
+        <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
+        <artifactId>sonar-packaging-maven-plugin</artifactId>
+        <version>1.23.0.740</version>
+        <extensions>true</extensions>
+        <configuration>
+          <!-- Clase principal que implementa org.sonar.api.Plugin -->
+          <pluginClass>com.example.sonar.todo.TodoCheckPlugin</pluginClass>
+          
+          <!-- Key único del plugin (usado para identificación interna) -->
+          <pluginKey>todo-check</pluginKey>
+          
+          <!-- Nombre visible en la UI de SonarQube -->
+          <pluginName>TODO Check</pluginName>
+          
+          <!-- Descripción detallada del plugin -->
+          <pluginDescription>Plugin mejorado que detecta comentarios TODO en código Java. Implementa Clean Code Attributes, Software Quality Impacts, análisis avanzado con regex, y logging profesional siguiendo las guías oficiales de SonarQube.</pluginDescription>
+          
+          <!-- Versión mínima del Plugin API requerida (usar en vez de sonarQubeMinVersion) -->
+          <pluginApiMinVersion>9.14</pluginApiMinVersion>
+          
+          <!-- Versión mínima de JRE requerida -->
+          <jreMinVersion>17</jreMinVersion>
+          
+          <!-- Información adicional (opcional) -->
+          <pluginUrl>https://github.com/bancolombia/sonar-todo-check-plugin</pluginUrl>
+          <pluginOrganization>Bancolombia</pluginOrganization>
+          <pluginOrganizationUrl>https://www.bancolombia.com</pluginOrganizationUrl>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
