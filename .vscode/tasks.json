@@ -1,0 +1,66 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "SonarQube: Bootstrap demo (todo listo)",
+      "type": "shell",
+      "command": "./scripts/bootstrap-demo.sh",
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "SonarQube: Up (docker-compose)",
+      "type": "shell",
+      "command": "./scripts/up.sh",
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "SonarQube: Down (docker-compose)",
+      "type": "shell",
+      "command": "./scripts/down.sh",
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "SonarQube: Reset (down -v + limpiar estado)",
+      "type": "shell",
+      "command": "./scripts/reset-sonarqube.sh",
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "SonarQube: Logs",
+      "type": "shell",
+      "command": "./scripts/logs.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "Plugin: Build + copy to ./plugins",
+      "type": "shell",
+      "command": "./scripts/build-plugin.sh",
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "SonarQube: Restart (load plugin)",
+      "type": "shell",
+      "command": "./scripts/restart-sonarqube.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "Demo: Build",
+      "type": "shell",
+      "command": "./scripts/build-demo.sh",
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "Demo: Scan",
+      "type": "shell",
+      "command": "./scripts/scan-demo.sh",
+      "problemMatcher": [],
+      "group": "test"
+    }
+  ]
+}
