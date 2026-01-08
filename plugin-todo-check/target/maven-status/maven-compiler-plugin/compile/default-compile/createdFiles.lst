@@ -1,0 +1,5 @@
+com\example\sonar\todo\TodoCheckPlugin.class
+com\example\sonar\todo\CobolLanguage.class
+com\example\sonar\todo\TodoRulesDefinition.class
+com\example\sonar\todo\TodoSensor.class
+com\example\sonar\todo\CobolQualityProfile.class
