@@ -1,0 +1,6 @@
+.sonarqube/
+plugins/*.jar
+demo-project/target/
+plugin-todo-check/target/
+.DS_Store
+.env
