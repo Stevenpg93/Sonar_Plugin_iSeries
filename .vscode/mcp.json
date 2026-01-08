@@ -1,0 +1,9 @@
+{
+	"servers": {
+		"Sonar Documentation": {
+			"url": "https://docs.sonarsource.com/sonarqube-community-build/~gitbook/mcp",
+			"type": "http"
+		}
+	},
+	"inputs": []
+}
